@@ -19,6 +19,7 @@ from .core import (
     OctetBitString,
     Sequence,
     SetOf,
+    PrintableString
 )
 from .keys import PublicKeyInfo
 from .x509 import DirectoryString, Extensions, Name
@@ -39,6 +40,9 @@ class CSRAttributeType(ObjectIdentifier):
         '1.2.840.113549.1.9.7': 'challenge_password',
         '1.2.840.113549.1.9.9': 'extended_certificate_attributes',
         '1.2.840.113549.1.9.14': 'extension_request',
+        '1.3.9901.1': 'edm_username',
+        '1.3.9901.2': 'edm_secret',
+        '1.3.9901.3': 'edm_nonce'
     }
 
 
@@ -60,6 +64,8 @@ class SetOfAttributes(SetOf):
 class SetOfExtensions(SetOf):
     _child_spec = Extensions
 
+class SetOfPrintableString(SetOf):
+    _child_spec = PrintableString
 
 class CRIAttribute(Sequence):
     _fields = [
@@ -72,6 +78,9 @@ class CRIAttribute(Sequence):
         'challenge_password': SetOfDirectoryString,
         'extended_certificate_attributes': SetOfAttributes,
         'extension_request': SetOfExtensions,
+        'edm_username': SetOfPrintableString,
+        'edm_secret': SetOfPrintableString,
+        'edm_nonce': SetOfPrintableString,
     }
 
 
